@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>graphe arithmos ajax test</title>
+        <link rel="stylesheet" href="./css/start/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
 	<script src="./js/jquery-1.7.1.min.js" type="text/javascript">
 	</script>
 </head>
@@ -18,6 +19,30 @@
         <div>Body:  <textarea id="body_val"></textarea><div id="post_body"><a>Post Body</a></div></div>
         <div>Notes: <textarea id="notes_val"></textarea><div id="post_notes">Post Notes</div></div>
         
+        <hr />
+        
+        <div id="verses">
+            <table id="verses_table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Chapter</th>
+                        <th>Start</th>
+                        <th colspan="2">End</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="book" /></td>
+                        <td><input type="text" name="chapter" /></td>
+                        <td><input type="text" name="v_start" /></td>
+                        <td><input type="text" name="v_end" /></td>
+                        <td><span class="ui-icon ui-icon-circle-plus"> </span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
 	<script>
 	$(document).ready(function(){
 	
@@ -28,6 +53,9 @@
                     $("#title").append(data.title);
                     $("#body").append(data.body);
                     $("#notes").append(data.notes);
+                        $('textarea#body_val').val(data.body);
+                        $('textarea#notes_val').val(data.notes);
+                        $('input#input_title').val(data.title);
                 }
             );
     
@@ -47,6 +75,19 @@
             alert(text);
             $.post("json_post.php?id=2&slot=notes", { "notes": text});
         });
+        
+        $(".ui-icon-circle-plus").click(function() {
+            var tblRow =	
+            "<tr>"+
+                "<td><input type=\"text\" name=\"book\" /></td>"+
+                "<td><input type=\"text\" name=\"chapter\" /></td>"+
+                "<td><input type=\"text\" name=\"v_start\" /></td>"+
+                "<td><input type=\"text\" name=\"v_end\" /></td>"+
+                "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"
+            +"</tr>";
+            $(tblRow).appendTo("#verses_table tbody");
+        });
+        
 	</script>
 </body>
 </html>
