@@ -5,27 +5,48 @@
 	</script>
 </head>
 <body>
-	<a href="#" id="loadentry">Entry Data</a>
+	
         
         <div id="id"></div>
         <div id="title"></div>
         <div id="body"></div>
         <div id="notes"></div>
+        <hr />
+        <h3>Editing</h3>
+        <input type="hidden" value="2" name="id" id="input_id" />
+        <div>Title: <input type="text" name="input_title" id="input_title" /><div id="post_title">Post Title</div></div>
+        <div>Body:  <textarea id="body_val"></textarea><div id="post_body"><a>Post Body</a></div></div>
+        <div>Notes: <textarea id="notes_val"></textarea><div id="post_notes">Post Notes</div></div>
         
 	<script>
 	$(document).ready(function(){
-	});
-	$("#loadentry").click(function(){
-		$.getJSON(
-			"json.php?id=2",
-			function(data){
-                            $("#id").append(data.id);
-                            $("#title").append(data.title);
-                            $("#body").append(data.body);
-                            $("#notes").append(data.notes);
-			}
-		);
-	});
+	
+            $.getJSON(
+                "json.php?id=2",
+                function(data){
+                    $("#id").append(data.id);
+                    $("#title").append(data.title);
+                    $("#body").append(data.body);
+                    $("#notes").append(data.notes);
+                }
+            );
+    
+        });
+        $("#post_body").click(function(){
+            var text = $('textarea#body_val').val();
+            alert(text);
+            $.post("json_post.php?id=2&slot=body", { "body": text});
+        });
+        $("#post_title").click(function(){
+            var text = $('input#input_title').val();
+            alert(text);
+            $.post("json_post.php?id=2&slot=title", { "title": text});
+        });
+        $("#post_notes").click(function(){
+            var text = $('textarea#notes_val').val();
+            alert(text);
+            $.post("json_post.php?id=2&slot=notes", { "notes": text});
+        });
 	</script>
 </body>
 </html>

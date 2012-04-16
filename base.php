@@ -9,11 +9,16 @@ require_once 'db.php';
  */
 class base extends db {
 
+    /**
+     * 
+     * @var int $id The entry ID for the item at hand
+     */
     public $id;
     public $verses;
     public $body;
     public $notes;
     public $status;
+    public $title;
 
 }
 

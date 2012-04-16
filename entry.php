@@ -32,6 +32,14 @@ class entry extends base {
     public function get_entry_data() {
         //connect to the database and get basic entry data
     }
+    
+    public function updateTitle() {
+        //hack test
+        $db = $this->ConnectDB();
+        $q = "UPDATE entry set title='".mysql_real_escape_string($this->title)."' where id='".$this->id."'";
+        error_log($q);
+        mysql_query($q, $db);
+    }
 }
 
 ?>
