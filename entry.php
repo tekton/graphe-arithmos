@@ -3,7 +3,7 @@
 require_once 'base.php';
 require_once 'body.php';
 require_once 'notes.php';
-require_once 'verses.php';
+require_once 'verse.php';
 
 /**
  * Something of the functional implementation of the base class

@@ -7,7 +7,7 @@ require_once 'db.php';
  *
  * @author tekton
  */
-class base extends base {
+class base extends db {
 
     public $id;
     public $verses;
