@@ -6,31 +6,23 @@
 </head>
 <body>
 	<a href="#" id="loadentry">Entry Data</a>
-	<table id="entry" border="1">
-		<thead>
-			<th>ID</th>
-			<th>Title</th>
-			<th>Body</th>
-			<th>Notes</th>
-		</thead>
-		<tbody></tbody>
-	</table>
+        
+        <div id="id"></div>
+        <div id="title"></div>
+        <div id="body"></div>
+        <div id="notes"></div>
+        
 	<script>
 	$(document).ready(function(){
 	});
 	$("#loadentry").click(function(){
-		$("#userdata tbody").html("");
 		$.getJSON(
 			"json.php?id=2",
 			function(data){
-                            var tblRow =
-                                    "<tr>"
-                                    +"<td>"+data.id+"</td>"
-                                    +"<td>"+data.title+"</td>"
-                                    +"<td>"+data.body+"</td>"
-                                    +"<td>"+data.notes+"</td>"
-                                    +"</tr>"
-                            $(tblRow).appendTo("#entry tbody");
+                            $("#id").append(data.id);
+                            $("#title").append(data.title);
+                            $("#body").append(data.body);
+                            $("#notes").append(data.notes);
 			}
 		);
 	});
