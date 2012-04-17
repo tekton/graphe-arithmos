@@ -58,34 +58,41 @@
                         $('input#input_title').val(data.title);
                 }
             );
-    
+            
+            $('body').click(function(event) {
+                if ($(event.target).is('.ui-icon-circle-plus')) {
+                    var tblRow =	
+                    "<tr>"+
+                        "<td><input type=\"text\" name=\"book\" /></td>"+
+                        "<td><input type=\"text\" name=\"chapter\" /></td>"+
+                        "<td><input type=\"text\" name=\"v_start\" /></td>"+
+                        "<td><input type=\"text\" name=\"v_end\" /></td>"+
+                        "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"
+                    +"</tr>";
+                    $(tblRow).appendTo("#verses_table tbody");
+
+                    $("#verses_table").delegate("span", "click");
+                }
+            });
+
         });
+        
         $("#post_body").click(function(){
             var text = $('textarea#body_val').val();
             alert(text);
             $.post("json_post.php?id=2&slot=body", { "body": text});
         });
+        
         $("#post_title").click(function(){
             var text = $('input#input_title').val();
             alert(text);
             $.post("json_post.php?id=2&slot=title", { "title": text});
         });
+        
         $("#post_notes").click(function(){
             var text = $('textarea#notes_val').val();
             alert(text);
             $.post("json_post.php?id=2&slot=notes", { "notes": text});
-        });
-        
-        $(".ui-icon-circle-plus").click(function() {
-            var tblRow =	
-            "<tr>"+
-                "<td><input type=\"text\" name=\"book\" /></td>"+
-                "<td><input type=\"text\" name=\"chapter\" /></td>"+
-                "<td><input type=\"text\" name=\"v_start\" /></td>"+
-                "<td><input type=\"text\" name=\"v_end\" /></td>"+
-                "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"
-            +"</tr>";
-            $(tblRow).appendTo("#verses_table tbody");
         });
         
 	</script>
