@@ -61,17 +61,23 @@
             
             $('body').click(function(event) {
                 if ($(event.target).is('.ui-icon-circle-plus')) {
-                    var tblRow =	
-                    "<tr>"+
-                        "<td><input type=\"text\" name=\"book\" /></td>"+
+                    
+                    var $book = $(event.target).parent().parent().contents().find("input[name='book']").val();
+                    var $chapter = $(event.target).parent().parent().contents().find("input[name='chapter']").val();
+                    var $v_start = $(event.target).parent().parent().contents().find("input[name='v_start']").val();
+                    var $v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
+                    
+                    alert($book + " :: " + $chapter + " :: " + $v_start + " :: " + $v_end);
+                    
+                    var tblRow = "<tr>"+
+                        "<td ><input type=\"text\" name=\"book\" /></td>"+
                         "<td><input type=\"text\" name=\"chapter\" /></td>"+
                         "<td><input type=\"text\" name=\"v_start\" /></td>"+
                         "<td><input type=\"text\" name=\"v_end\" /></td>"+
                         "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"
                     +"</tr>";
+                
                     $(tblRow).appendTo("#verses_table tbody");
-
-                    $("#verses_table").delegate("span", "click");
                 }
             });
 
