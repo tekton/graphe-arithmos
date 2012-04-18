@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 
+var verse_tbl_row="";
 
 $(document).ready(function(){
 	
@@ -19,6 +20,27 @@ $(document).ready(function(){
         }
     );
 
+    tblRow = "<tr>";
+    
+    tblRow += "<td><select name='book'>";
+    var options = "";
+    
+
+    $.each(books, function(k, v) {
+        //alert(k+" :: "+v);
+        options += "<option value='"+k+"'>"+v+"</option>";
+    });
+
+    tblRow += options;
+    tblRow += "</select></td>";
+    tblRow += "<td><input type=\"text\" name=\"chapter\" size='3' /></td>"+
+            "<td><input type=\"text\" name=\"v_start\" size='3' /></td>"+
+            "<td><input type=\"text\" name=\"v_end\" size='3' /></td>"+
+            "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"+
+            "</tr>";
+
+    $(tblRow).appendTo("#verses_table tbody");
+
     $('body').click(function(event) {
         if ($(event.target).is('.ui-icon-circle-plus')) {
 
@@ -28,14 +50,6 @@ $(document).ready(function(){
             var $v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
 
             alert($book + " :: " + $chapter + " :: " + $v_start + " :: " + $v_end);
-
-            var tblRow = "<tr>"+
-                "<td ><input type=\"text\" name=\"book\" /></td>"+
-                "<td><input type=\"text\" name=\"chapter\" /></td>"+
-                "<td><input type=\"text\" name=\"v_start\" /></td>"+
-                "<td><input type=\"text\" name=\"v_end\" /></td>"+
-                "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"
-            +"</tr>";
 
             $(tblRow).appendTo("#verses_table tbody");
         }
@@ -60,3 +74,16 @@ $(document).ready(function(){
     alert(text);
     $.post("json_post.php?id=2&slot=notes", { "notes": text});
     });
+    
+    function get_books() {
+        $.getJSON(
+            "books.php",
+            function(data){
+                alert(data);
+            }
+        );
+    }
+    
+    function set_verse_row() {
+        
+    }
