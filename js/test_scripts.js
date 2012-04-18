@@ -67,16 +67,13 @@ $(document).ready(function(){
         });
     });
 
-    $("post_notes").click(function(){
+    $("#post_notes").click(function(){
         var text = $('textarea#notes_val').val();
         alert(text);
         $.post("json_post.php?id=2&slot=notes", {"notes": text},
         function(){
             get_entry_data();
-        }
-    );
-        
-
+        });
     });
     
     function get_entry_data() {
