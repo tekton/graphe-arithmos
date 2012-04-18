@@ -1,0 +1,40 @@
+/* 
+    Document   : ga.css
+    Created on : Apr 18, 2012, 1:11:21 PM
+    Author     : tekton
+    Description:
+        Basic css for testing, etc
+*/
+
+root { 
+    display: block;
+}
+
+#container {
+    margin: 0 auto;
+    width: 1024px;
+    border: 1px solid green;
+}
+
+#content {
+    width: 645px;
+    padding: 5px;
+    border: 1px solid blue;
+}
+
+#verses {
+    width: 350px;
+    padding: 5px;
+    float: right;
+    border: 1px solid red;
+}
+
+#editing {
+    width: 645px;
+    padding: 5px;
+    border: 1px solid gray;
+}
+
+#post_body {
+    float: right;
+}

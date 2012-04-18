@@ -4,23 +4,13 @@
  */
 
 var verse_tbl_row="";
+var tblRow = "";
 
 $(document).ready(function(){
 	
-    $.getJSON(
-        "json.php?id=2",
-        function(data){
-            $("#id").append(data.id);
-            $("#title").append(data.title);
-            $("#body").append(data.body);
-            $("#notes").append(data.notes);
-                $('textarea#body_val').val(data.body);
-                $('textarea#notes_val').val(data.notes);
-                $('input#input_title').val(data.title);
-        }
-    );
+    get_entry_data();
 
-    tblRow = "<tr>";
+    tblRow += "<tr>";
     
     tblRow += "<td><select name='book'>";
     var options = "";
@@ -44,7 +34,7 @@ $(document).ready(function(){
     $('body').click(function(event) {
         if ($(event.target).is('.ui-icon-circle-plus')) {
 
-            var $book = $(event.target).parent().parent().contents().find("input[name='book']").val();
+            var $book = $(event.target).parent().parent().contents().find("select[name='book']").val();
             var $chapter = $(event.target).parent().parent().contents().find("input[name='chapter']").val();
             var $v_start = $(event.target).parent().parent().contents().find("input[name='v_start']").val();
             var $v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
@@ -52,38 +42,60 @@ $(document).ready(function(){
             alert($book + " :: " + $chapter + " :: " + $v_start + " :: " + $v_end);
 
             $(tblRow).appendTo("#verses_table tbody");
+            
+            $(event.target).hide();
         }
     });
 
-    });
+    
 
     $("#post_body").click(function(){
-    var text = $('textarea#body_val').val();
-    alert(text);
-    $.post("json_post.php?id=2&slot=body", { "body": text});
+        var text = $('textarea#body_val').val();
+        alert(text);
+        $.post("json_post.php?id=2&slot=body", {"body": text},
+        function(){
+            get_entry_data();
+        });
     });
 
     $("#post_title").click(function(){
-    var text = $('input#input_title').val();
-    alert(text);
-    $.post("json_post.php?id=2&slot=title", { "title": text});
+        var text = $('input#input_title').val();
+        alert(text);
+        $.post("json_post.php?id=2&slot=title", {"title": text},
+        function(){
+            get_entry_data();
+        });
     });
 
-    $("#post_notes").click(function(){
-    var text = $('textarea#notes_val').val();
-    alert(text);
-    $.post("json_post.php?id=2&slot=notes", { "notes": text});
+    $("post_notes").click(function(){
+        var text = $('textarea#notes_val').val();
+        alert(text);
+        $.post("json_post.php?id=2&slot=notes", {"notes": text},
+        function(){
+            get_entry_data();
+        }
+    );
+        
+
     });
     
-    function get_books() {
+    function get_entry_data() {
         $.getJSON(
-            "books.php",
+            "json.php?id=2",
             function(data){
-                alert(data);
+                $("#id").html(data.id);
+                $("#title").html(data.title);
+                $("#body").html(data.body);
+                $("#notes").html(data.notes);
+                    $('textarea#body_val').val(data.body);
+                    $('textarea#notes_val').val(data.notes);
+                    $('input#input_title').val(data.title);
             }
-        );
+        );        
     }
     
     function set_verse_row() {
         
     }
+    
+    });
