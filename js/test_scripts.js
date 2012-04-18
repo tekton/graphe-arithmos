@@ -52,7 +52,7 @@ $(document).ready(function(){
     $("#post_body").click(function(){
         var text = $('textarea#body_val').val();
         alert(text);
-        $.post("json_post.php?id=2&slot=body", {"body": text},
+        $.post("json_post.php?id="+id+"&slot=body", {"body": text},
         function(){
             get_entry_data();
         });
@@ -61,7 +61,7 @@ $(document).ready(function(){
     $("#post_title").click(function(){
         var text = $('input#input_title').val();
         alert(text);
-        $.post("json_post.php?id=2&slot=title", {"title": text},
+        $.post("json_post.php?id="+id+"&slot=title", {"title": text},
         function(){
             get_entry_data();
         });
@@ -70,7 +70,7 @@ $(document).ready(function(){
     $("#post_notes").click(function(){
         var text = $('textarea#notes_val').val();
         alert(text);
-        $.post("json_post.php?id=2&slot=notes", {"notes": text},
+        $.post("json_post.php?id="+id+"&slot=notes", {"notes": text},
         function(){
             get_entry_data();
         });
@@ -78,7 +78,7 @@ $(document).ready(function(){
     
     function get_entry_data() {
         $.getJSON(
-            "json.php?id=2",
+            "json.php?id="+id,
             function(data){
                 $("#id").html(data.id);
                 $("#title").html(data.title);
@@ -95,4 +95,19 @@ $(document).ready(function(){
         
     }
     
-    });
+});
+
+$.extend({
+    urlParams: function(){
+        var params = [], pair;
+        var pairs = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        //alert(pairs);
+        for(var i = 0; i < pairs.length; i++)
+        {
+            pair = pairs[i].split('=');
+            params.push(pair[0]);
+            params[pair[0]] = pair[1];
+        }
+        return params;
+    }
+});
