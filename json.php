@@ -5,49 +5,34 @@ require_once 'entry.php';
  *
  * @author tekton
  */
-class json extends entry {
+class json {
     public $type;
     public $entry_id;
     public $title;
     
-    public function getType($json) {
-        return;
-    }
-    
-    public function sendJson() {
-        
-        //eventually will check for type and send back accordingly, but since it's still test time...
-        $db = $this->ConnectDB();
-        
-        $q = "select entry.id, entry.title, body.body, notes.notes from entry 
-        LEFT JOIN (body, notes) on (body.entry_id = entry.id AND notes.entry_id = entry.id) 
-        where entry.id = '".$this->entry_id."'";
-        
-        $s = mysql_query($q);
-        while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
-            $this->id = $result["id"];
-            $this->body = $result["body"];
-            $this->notes = $result["notes"];
-            $this->title = $result["title"];
+    public function sendJson($type) {
+        switch($type) {
+            case "verses":
+                require_once("verse.php");
+                $verse = new verse();
+                $verse->id = $this->entry_id;
+                $verse->getAllVersesFromDB();
+                return $verse->json_array;
+                break;
+            case "entry":
+                require_once("entry.php");
+                $entry = new entry();
+                $entry->id = $this->entry_id;
+                $entry->get_entry_data();
+                return $entry->json_array;
+                break;
         }
-        $json = '{
-            "x": [
-                {
-                    "id":"'.json_encode($this->id).'",
-                    "body":"'.json_encode($this->body).'",
-                    "notes":"'.json_encode($this->notes).'",
-                    "title":"'.json_encode($this->title).'"
-                }
-            ]
-        }';
-     
-        $json = array("id" =>$this->id, "body" => $this->body, "notes" => $this->notes, "title" => $this->title);
-        return json_encode($json);
     }
 }
 
 $json = new json();
 $json->entry_id = $_GET["id"];
-echo $json->sendJson();
+$type = (isset($_GET["type"])) ? $_GET["type"] : "entry";
+echo $json->sendJson($type);
 
 ?>

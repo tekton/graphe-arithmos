@@ -1,10 +1,9 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * JSON posting logic; consolidating for hacky testing hacks
+ *  
  */
-
 
 switch($_GET["slot"]) {
     case "body":
@@ -27,6 +26,16 @@ switch($_GET["slot"]) {
         $title->id = $_GET["id"];
         $title->title = $_POST["title"];
         $title->updateTitle();    
+        break;
+    case "verse":
+        require_once("verse.php");
+        $verse = new verse();
+        $verse->id = $_GET["id"];
+        $verse->start_book = $_POST["book"];
+        $verse->start_chapter = $_POST["chapter"];
+        $verse->start_verse = $_POST["v_start"];
+        $verse->end_verse = $_POST["v_end"];
+        $verse->putVerseInDB();
         break;
 }
 

@@ -34,16 +34,21 @@ $(document).ready(function(){
     $('body').click(function(event) {
         if ($(event.target).is('.ui-icon-circle-plus')) {
 
-            var $book = $(event.target).parent().parent().contents().find("select[name='book']").val();
-            var $chapter = $(event.target).parent().parent().contents().find("input[name='chapter']").val();
-            var $v_start = $(event.target).parent().parent().contents().find("input[name='v_start']").val();
-            var $v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
+            var book = $(event.target).parent().parent().contents().find("select[name='book']").val();
+            var chapter = $(event.target).parent().parent().contents().find("input[name='chapter']").val();
+            var v_start = $(event.target).parent().parent().contents().find("input[name='v_start']").val();
+            var v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
 
-            alert($book + " :: " + $chapter + " :: " + $v_start + " :: " + $v_end);
+            alert(book + " :: " + chapter + " :: " + v_start + " :: " + v_end);
 
             $(tblRow).appendTo("#verses_table tbody");
             
             $(event.target).hide();
+            
+            $.post("json_post.php?id="+id+"&slot=verse", {"book": book, "chapter": chapter, "v_start": v_start,"v_end": v_end},
+            function(){
+                get_verse_data();
+            });
         }
     });
 
@@ -90,7 +95,16 @@ $(document).ready(function(){
             }
         );        
     }
-    
+ 
+     function get_verse_data() {
+        $.getJSON(
+            "json.php?id="+id+"&type=verse",
+            function(data){
+                
+            }
+        );        
+    }
+ 
     function set_verse_row() {
         
     }

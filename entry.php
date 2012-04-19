@@ -14,6 +14,8 @@ class entry extends base {
     
     //See base.php for basic variables!!!
     
+    public $json_array;
+    
     public function create_new_entry() {
         //connect to the database
         $db = $this->ConnectDB();
@@ -30,7 +32,21 @@ class entry extends base {
     }
     
     public function get_entry_data() {
-        //connect to the database and get basic entry data
+        $db = $this->ConnectDB();
+        
+        $q = "select entry.id, entry.title, body.body, notes.notes from entry 
+        LEFT JOIN (body, notes) on (body.entry_id = entry.id AND notes.entry_id = entry.id) 
+        where entry.id = '".$this->id."'";
+        
+        $s = mysql_query($q);
+        while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
+            $this->id = $result["id"];
+            $this->body = $result["body"];
+            $this->notes = $result["notes"];
+            $this->title = $result["title"];
+        }
+     
+        $this->json_array = json_encode(array("id" =>$this->id, "body" => $this->body, "notes" => $this->notes, "title" => $this->title));
     }
     
     public function updateTitle() {

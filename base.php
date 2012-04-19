@@ -19,6 +19,7 @@ class base extends db {
     public $notes;
     public $status;
     public $title;
+    
 
 }
 
