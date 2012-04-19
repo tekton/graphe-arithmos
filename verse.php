@@ -31,21 +31,22 @@ class verse extends base {
         $db = $this->ConnectDB();
         $q = "SELECT * from verses where id = '".$this->verse_id."'";
         $s = mysql_query($q, $db);
-        while($result = mysql_fetch_array($s, $result_type)) {
+        while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
             $this->verse_array["id"] = $result["id"];
             $this->verse_array["entry_id"] = $result["entry_id"];
-            $this->verse_array["start_book"] = $result["start_book"];
-            $this->verse_array["start_chapter"] = $result["start_chapter"];
-            $this->verse_array["start_verse"] = $result["start_verse"];
-            $this->verse_array["end_verse"] = $result["end_verse"];
+            $this->verse_array["book"] = $result["start_book"];
+            $this->verse_array["chapter"] = $result["start_chapter"];
+            $this->verse_array["v_start"] = $result["start_verse"];
+            $this->verse_array["v_end"] = $result["end_verse"];
         }
+        $this->json_array = json_encode($this->verse_array);
     }
     
     public function getAllVersesFromDB() {
         $db = $this->ConnectDB();
         $q = "SELECT * from verses where entry_id = '".$this->id."'";
         $s = mysql_query($q, $db);
-        while($result = mysql_fetch_array($s, $result_type)) {
+        while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
             $this->verse_array[$result["id"]] = array(
                 "book" => $result["start_book"],
                 "chapter" => $result["start_chapter"],

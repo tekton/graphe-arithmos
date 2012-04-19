@@ -36,6 +36,7 @@ switch($_GET["slot"]) {
         $verse->start_verse = $_POST["v_start"];
         $verse->end_verse = $_POST["v_end"];
         $verse->putVerseInDB();
+        echo json_encode($verse->verse_id);
         break;
 }
 

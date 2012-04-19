@@ -9,7 +9,8 @@ var tblRow = "";
 $(document).ready(function(){
 	
     get_entry_data();
-
+    get_verses_data();
+    
     tblRow += "<tr>";
     
     tblRow += "<td><select name='book'>";
@@ -46,8 +47,8 @@ $(document).ready(function(){
             $(event.target).hide();
             
             $.post("json_post.php?id="+id+"&slot=verse", {"book": book, "chapter": chapter, "v_start": v_start,"v_end": v_end},
-            function(){
-                get_verse_data();
+            function(data){
+                get_verse_data(data);
             });
         }
     });
@@ -96,18 +97,31 @@ $(document).ready(function(){
         );        
     }
  
-     function get_verse_data() {
+     function get_verses_data() {
+        //$("#verses_linked").html("");
         $.getJSON(
-            "json.php?id="+id+"&type=verse",
+            "json.php?id="+id+"&type=verses",
             function(data){
-                
+                $.each(data, function(verse, vals) {
+                    text = vals["book"]+" "+vals["chapter"]+":"+vals["v_start"]+"-"+vals["v_end"];
+                    $("#verses_linked").append("<div class='verse'>"+text+"</div>");
+                });
             }
         );        
     }
  
-    function set_verse_row() {
-        
-    }
+      function get_verse_data(v_id) {
+        //$("#verses_linked").html("");
+        $.getJSON(
+            "json.php?id="+id+"&type=verse&v_id="+v_id,
+            function(vals){
+                
+                    text = vals["book"]+" "+vals["chapter"]+":"+vals["v_start"]+"-"+vals["v_end"];
+                    $("#verses_linked").append("<div class='verse'>"+text+"</div>");
+                
+            }
+        );        
+    }   
     
 });
 

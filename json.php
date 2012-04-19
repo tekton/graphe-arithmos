@@ -19,6 +19,14 @@ class json {
                 $verse->getAllVersesFromDB();
                 return $verse->json_array;
                 break;
+            case "verse":
+                require_once("verse.php");
+                $verse = new verse();
+                $verse->id = $this->entry_id;
+                $verse->verse_id = $_GET["v_id"];
+                $verse->getVerseFromDB();
+                return $verse->json_array;
+                break;
             case "entry":
                 require_once("entry.php");
                 $entry = new entry();
