@@ -46,11 +46,12 @@ class verse extends base {
     
     public function getAllVersesFromDB() {
         $db = $this->ConnectDB();
-        $q = "SELECT * from verses as v
+        $q = "SELECT v.id, v.start_book, v.start_chapter, v.start_verse, v.end_verse, b.name from verses as v
             LEFT JOIN books as b on v.start_book = b.id
-            where v.entry_id = '".$this->id."'";
+            where v.entry_id = '".$this->id."' order by v.id asc";
         $s = mysql_query($q, $db);
         while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
+            //echo "<pre>"; print_r($result); echo "</pre>";
             $this->verse_array[$result["id"]] = array(
                 "book" => $result["name"],
                 "chapter" => $result["start_chapter"],
@@ -58,6 +59,7 @@ class verse extends base {
                 "v_end" => $result["end_verse"]
             );
         }
+        
         $this->json_array = json_encode($this->verse_array);
     }
     
