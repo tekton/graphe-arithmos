@@ -7,13 +7,13 @@ var verse_tbl_row="";
 var tblRow = "";
 
 $(document).ready(function(){
-	
+
     get_entry_data();
     get_verses_data();
     
     tblRow += "<tr>";
     
-    tblRow += "<td><select name='book'>";
+    tblRow += "<td><select name='book' id='book'>";
     var options = "";
     
 
@@ -24,36 +24,12 @@ $(document).ready(function(){
 
     tblRow += options;
     tblRow += "</select></td>";
-    tblRow += "<td><input type=\"text\" name=\"chapter\" size='3' /></td>"+
-            "<td><input type=\"text\" name=\"v_start\" size='3' /></td>"+
-            "<td><input type=\"text\" name=\"v_end\" size='3' /></td>"+
-            "<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"+
-            "</tr>";
+    tblRow += "<td><input type=\"text\" name=\"chapter\" id='chapter' size='3' /></td>"+
+            "<td><input type=\"text\" name=\"v_start\" size='3' id='v_start' /></td>"+
+            "<td><input type=\"text\" name=\"v_end\" size='3' id='v_end' /></td>"+
+            "</tr>"; //"<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"+
 
     $(tblRow).appendTo("#verses_table tbody");
-
-    $('body').click(function(event) {
-        if ($(event.target).is('.ui-icon-circle-plus')) {
-
-            var book = $(event.target).parent().parent().contents().find("select[name='book']").val();
-            var chapter = $(event.target).parent().parent().contents().find("input[name='chapter']").val();
-            var v_start = $(event.target).parent().parent().contents().find("input[name='v_start']").val();
-            var v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
-
-            alert(book + " :: " + chapter + " :: " + v_start + " :: " + v_end);
-
-            $(tblRow).appendTo("#verses_table tbody");
-            
-            $(event.target).hide();
-            
-            $.post("json_post.php?id="+id+"&slot=verse", {"book": book, "chapter": chapter, "v_start": v_start,"v_end": v_end},
-            function(data){
-                get_verse_data(data);
-            });
-        }
-    });
-
-    
 
     $("#post_body").click(function(){
         var text = $('textarea#body_val').val();
@@ -86,7 +62,6 @@ $(document).ready(function(){
         $.getJSON(
             "json.php?id="+id,
             function(data){
-                $("#id").html(data.id);
                 $("#title").html(data.title);
                 $("#body").html(data.body);
                 $("#notes").html(data.notes);
@@ -115,14 +90,54 @@ $(document).ready(function(){
         $.getJSON(
             "json.php?id="+id+"&type=verse&v_id="+v_id,
             function(vals){
-                
-                    text = vals["book"]+" "+vals["chapter"]+":"+vals["v_start"]+"-"+vals["v_end"];
-                    $("#verses_linked").append("<div class='verse'>"+text+"</div>");
-                
+                text = vals["book"]+" "+vals["chapter"]+":"+vals["v_start"]+"-"+vals["v_end"];
+                $("#verses_linked").append("<div class='verse'>"+text+"</div>");
             }
         );        
     }   
     
+    ///// Variables for the verse entry diaglog /////
+    var book = $( "#book" ),
+        chapter = $( "#chapter" ),
+        v_start = $( "#v_start" ),
+        v_end = $("#v_end"),
+        allFields = $( [] ).add( book ).add( chapter ).add( v_start ).add(v_end),
+        tips = $( ".validateTips" );
+
+    /////verse entry dialog - mostly taken straight from the jqueryui demo for this feature /////
+    $("#verse-dialog-form").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 500,
+        modal: true,
+        buttons: {
+            "Add Verse": function() {
+                var bValid = true;
+                allFields.removeClass( "ui-state-error" );
+
+                //add validation for verse, chapter, and book ranges here someday
+
+                if ( bValid ) {
+                    $.post("json_post.php?id="+id+"&slot=verse", {"book": book.val(), "chapter": chapter.val(), "v_start": v_start.val(),"v_end": v_end.val()},
+                    function(data){
+                        get_verse_data(data);
+                    });
+                    //do what's gotta be done
+                    $( this ).dialog( "close" );
+                }
+            },
+            Cancel: function() {
+                    $( this ).dialog( "close" );
+            }
+        },
+        close: function() {
+                allFields.val("").removeClass( "ui-state-error" );
+        }
+    });
+    
+    
+    $( "#add-verse" ).button().click(function() {$( "#verse-dialog-form" ).dialog( "open" );}); 
+
 });
 
 $.extend({
@@ -137,5 +152,27 @@ $.extend({
             params[pair[0]] = pair[1];
         }
         return params;
+    }
+});
+
+/////legacy code/////
+$('body').click(function(event) {
+    if ($(event.target).is('.ui-icon-circle-plus')) {
+
+        var book = $(event.target).parent().parent().contents().find("select[name='book']").val();
+        var chapter = $(event.target).parent().parent().contents().find("input[name='chapter']").val();
+        var v_start = $(event.target).parent().parent().contents().find("input[name='v_start']").val();
+        var v_end = $(event.target).parent().parent().contents().find("input[name='v_end']").val();
+
+        //alert(book + " :: " + chapter + " :: " + v_start + " :: " + v_end);
+
+        $(tblRow).appendTo("#verses_table tbody");
+
+        $(event.target).hide();
+
+        $.post("json_post.php?id="+id+"&slot=verse", {"book": book, "chapter": chapter, "v_start": v_start,"v_end": v_end},
+        function(data){
+            get_verse_data(data);
+        });
     }
 });

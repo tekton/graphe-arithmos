@@ -13,6 +13,7 @@ root {
 #container {
     margin: 0 auto;
     width: 1024px;
+    font-size: 90%;
     border: 1px solid green;
 }
 
@@ -23,7 +24,7 @@ root {
 }
 
 #verses {
-    width: 350px;
+    width: 290px;
     padding: 5px;
     float: right;
     border: 1px solid red;
@@ -33,4 +34,16 @@ root {
     width: 645px;
     padding: 5px;
     border: 1px solid gray;
+}
+
+#notes_container {
+    margin-top: 1em;
+}
+
+.p5 {
+    padding: 5px;
+}
+
+.aRight {
+    text-align: right;
 }

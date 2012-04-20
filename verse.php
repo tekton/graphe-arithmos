@@ -29,12 +29,14 @@ class verse extends base {
     
     public function getVerseFromDB() {
         $db = $this->ConnectDB();
-        $q = "SELECT * from verses where id = '".$this->verse_id."'";
+        $q = "SELECT * from verses as v
+        LEFT JOIN books as b on v.start_book = b.id
+        where v.id = '".$this->verse_id."'";
         $s = mysql_query($q, $db);
         while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
             $this->verse_array["id"] = $result["id"];
             $this->verse_array["entry_id"] = $result["entry_id"];
-            $this->verse_array["book"] = $result["start_book"];
+            $this->verse_array["book"] = $result["name"];
             $this->verse_array["chapter"] = $result["start_chapter"];
             $this->verse_array["v_start"] = $result["start_verse"];
             $this->verse_array["v_end"] = $result["end_verse"];
@@ -44,11 +46,13 @@ class verse extends base {
     
     public function getAllVersesFromDB() {
         $db = $this->ConnectDB();
-        $q = "SELECT * from verses where entry_id = '".$this->id."'";
+        $q = "SELECT * from verses as v
+            LEFT JOIN books as b on v.start_book = b.id
+            where v.entry_id = '".$this->id."'";
         $s = mysql_query($q, $db);
         while($result = mysql_fetch_array($s, MYSQL_BOTH)) {
             $this->verse_array[$result["id"]] = array(
-                "book" => $result["start_book"],
+                "book" => $result["name"],
                 "chapter" => $result["start_chapter"],
                 "v_start" => $result["start_verse"],
                 "v_end" => $result["end_verse"]
