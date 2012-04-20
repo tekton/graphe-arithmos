@@ -14,20 +14,21 @@ root {
     margin: 0 auto;
     width: 1024px;
     font-size: 90%;
-    border: 1px solid green;
+    /*border: 1px solid green;*/
 }
 
 #content {
     width: 645px;
     padding: 5px;
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
+    margin-left: 40px;
 }
 
 #verses {
     width: 290px;
     padding: 5px;
     float: right;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
 }
 
 #editing {
@@ -46,4 +47,15 @@ root {
 
 .aRight {
     text-align: right;
+}
+
+.both {
+    clear: both;
+}
+
+span.ui-icon {
+  float:left;
+  margin-bottom:0;
+  margin-right:4px;
+  margin-top:0;
 }
