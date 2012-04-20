@@ -12,16 +12,15 @@ root {
 
 #container {
     margin: 0 auto;
-    width: 1024px;
+    width: 800px;
     font-size: 90%;
     /*border: 1px solid green;*/
 }
 
 #content {
-    width: 645px;
+    width: 497px;
     padding: 5px;
     /*border: 1px solid blue;*/
-    margin-left: 40px;
 }
 
 #verses {
@@ -32,9 +31,9 @@ root {
 }
 
 #editing {
-    width: 645px;
-    padding: 5px;
-    border: 1px solid gray;
+    /*width: 645px;*/
+    /*padding: 5px;*/
+    /*border: 1px solid gray;*/
 }
 
 #notes_container {

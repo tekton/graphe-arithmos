@@ -30,33 +30,6 @@ $(document).ready(function(){
             "</tr>"; //"<td><span class=\"ui-icon ui-icon-circle-plus\"> </span></td>"+
 
     $(tblRow).appendTo("#verses_table tbody");
-
-    $("#post_body").click(function(){
-        var text = $('textarea#body_val').val();
-        alert(text);
-        $.post("json_post.php?id="+id+"&slot=body", {"body": text},
-        function(){
-            get_entry_data();
-        });
-    });
-
-    $("#post_title").click(function(){
-        var text = $('input#input_title').val();
-        alert(text);
-        $.post("json_post.php?id="+id+"&slot=title", {"title": text},
-        function(){
-            get_entry_data();
-        });
-    });
-
-    $("#post_notes").click(function(){
-        var text = $('textarea#notes_val').val();
-        alert(text);
-        $.post("json_post.php?id="+id+"&slot=notes", {"notes": text},
-        function(){
-            get_entry_data();
-        });
-    });
     
     function get_entry_data() {
         $.getJSON(
@@ -136,7 +109,78 @@ $(document).ready(function(){
     });
     
     
-    $( "#add-verse" ).button().click(function() {$( "#verse-dialog-form" ).dialog( "open" );}); 
+    $( "#add-verse" ).button().click(function() {$( "#verse-dialog-form" ).dialog( "open" );});
+    /////end verse dialog code/////
+    
+    /////title, body, and notes dialog/////
+    $("#title_dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Update": function(){
+                var text = $('input#input_title').val();
+                /////alert(text);
+                $.post("json_post.php?id="+id+"&slot=title", {"title": text},
+                function(){
+                    get_entry_data();
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+    
+    $( "#post_title" ).click(function() {$("#title_dialog").dialog( "open" );});
+    // end title //
+    
+    //     body //
+    $("#body_dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Update": function(){
+                var text = $('textarea#body_val').val();
+                /////alert(text);
+                $.post("json_post.php?id="+id+"&slot=body", {"body": text},
+                function(){
+                    get_entry_data();
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+    
+    $( "#post_body" ).click(function() {$("#body_dialog").dialog( "open" );});    
+    
+    // end body //
+    
+    //     notes //
+     $("#notes_dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Update": function(){
+                var text = $('textarea#notes_val').val();
+                /////alert(text);
+                $.post("json_post.php?id="+id+"&slot=notes", {"notes": text},
+                function(){
+                    get_entry_data();
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });   
+    
+    $( "#post_notes" ).click(function() {$("#notes_dialog").dialog( "open" );});
+    // end notes //
 
 });
 

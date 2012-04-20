@@ -43,33 +43,32 @@
     
     <div id="content" class="ui-widget">
 
-        <div id="body_container">
-            <div id="title_head" class="ui-widget-header p5"><span class="ui-icon ui-icon-wrench"></span><span id="title"></span></div>
-            <div id="body" class="ui-widget-content p5"></div>
+        <div id="entry_container">
+            <div id="title_head" class="ui-widget-header p5"><span id="post_title" class="ui-icon ui-icon-wrench"></span><span id="title"></span></div>
+            <div id="body_container" class="ui-widget-content p5">
+                <span id="post_body" class="ui-icon ui-icon-wrench"></span>
+                <span id="body"></span>
+            </div>
         </div>
         
         <div id="notes_container">
-            <div id="notes_header" class="ui-widget-header p5"><span class="ui-icon ui-icon-wrench"></span>Notes</div>
+            <div id="notes_header" class="ui-widget-header p5"><span id="post_notes" class="ui-icon ui-icon-wrench"></span>Notes</div>
             <div id="notes" class="ui-widget-content p5"></div>
         </div>
     </div>
         
-        <!--<div id="editing">
-            <h3>Editing</h3>
-            <input type="hidden" value="2" name="id" id="input_id" />
-            <div>Title:
-                <input type="text" name="input_title" id="input_title" />
-                <div id="post_title" class="ui-icon ui-icon-refresh"><a>Post Title</a></div>
+        <div id="editing">
+            <div id="title_dialog" title="Title Update">Title: <input type="text" name="input_title" id="input_title" />
             </div>
-            <div>Body:
+            
+            <div id="body_dialog" title="Body Update">Body:
                 <textarea id="body_val"></textarea>
-                <span id="post_body" class="ui-icon ui-icon-refresh"><a>Post Body</a></span>
             </div>
-            <div>Notes
+            
+            <div id="notes_dialog" title="Notes Update">Notes
                 <textarea id="notes_val"></textarea>
-                <span id="post_notes" class="ui-icon ui-icon-refresh"><a>Post Notes</a></span>
             </div>
-        </div>-->
+        </div>
         
         <p class="both">&nbsp;</p>
         
